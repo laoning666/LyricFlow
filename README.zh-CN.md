@@ -87,7 +87,7 @@ python -m src.main
 | `OVERWRITE_COVER` | `false` | 覆盖已有封面文件 |
 | `UPDATE_LYRICS` | `false` | 将歌词写入音频元数据 |
 | `UPDATE_COVER` | `false` | 将封面写入音频元数据 |
-| `UPDATE_BASIC_INFO` | `false` | 从 API 获取并写入 艺术家/标题/专辑 |
+| `UPDATE_BASIC_INFO` | `false` | 将 艺术家/标题/专辑 写入元数据 |
 | `USE_FOLDER_STRUCTURE` | `true` | 从文件夹结构推断歌手/专辑 |
 | `DEFAULT_ARTIST` | `""` | 备用默认歌手名 |
 | `PLATFORMS` | `netease,kuwo,qq` | 搜索平台优先级 |

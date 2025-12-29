@@ -87,7 +87,7 @@ python -m src.main
 | `OVERWRITE_COVER` | `false` | Overwrite existing cover files |
 | `UPDATE_LYRICS` | `false` | Write lyrics to audio metadata |
 | `UPDATE_COVER` | `false` | Write cover to audio metadata |
-| `UPDATE_BASIC_INFO` | `false` | Write artist/title/album from API |
+| `UPDATE_BASIC_INFO` | `false` | Write artist/title/album to metadata |
 | `USE_FOLDER_STRUCTURE` | `true` | Infer artist/album from folder structure |
 | `DEFAULT_ARTIST` | `""` | Fallback artist name |
 | `PLATFORMS` | `netease,kuwo,qq` | Search platform priority |

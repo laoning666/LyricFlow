@@ -81,14 +81,13 @@ python -m src.main
 |----------|--------|------|
 | `MUSIC_PATH` | `/music` | 音乐文件夹路径 |
 | `SCAN_INTERVAL_DAYS` | `0` | 扫描间隔（天），0 = 只扫描一次，1 = 每天 |
-| `DOWNLOAD_LYRICS` | `true` | 是否下载歌词（.lrc 文件） |
-| `DOWNLOAD_COVER` | `true` | 是否下载封面（cover.jpg） |
-| `EMBED_LYRICS` | `false` | 是否将歌词嵌入音频元数据 |
-| `EMBED_COVER` | `false` | 是否将封面嵌入音频元数据 |
-| `OVERWRITE_LYRICS` | `false` | 是否覆盖已有歌词 |
-| `OVERWRITE_COVER` | `false` | 是否覆盖已有封面 |
-| `OVERWRITE_EMBEDDED` | `false` | 是否覆盖已嵌入的数据 |
-| `UPDATE_METADATA` | `false` | 从 API 更新艺术家/标题/专辑 |
+| `DOWNLOAD_LYRICS` | `true` | 下载歌词（.lrc 文件） |
+| `DOWNLOAD_COVER` | `true` | 下载封面（cover.jpg） |
+| `OVERWRITE_LYRICS` | `false` | 覆盖已有歌词文件 |
+| `OVERWRITE_COVER` | `false` | 覆盖已有封面文件 |
+| `UPDATE_LYRICS` | `false` | 将歌词写入音频元数据 |
+| `UPDATE_COVER` | `false` | 将封面写入音频元数据 |
+| `UPDATE_BASIC_INFO` | `false` | 从 API 获取并写入 艺术家/标题/专辑 |
 | `USE_FOLDER_STRUCTURE` | `true` | 从文件夹结构推断歌手/专辑 |
 | `DEFAULT_ARTIST` | `""` | 备用默认歌手名 |
 | `PLATFORMS` | `netease,kuwo,qq` | 搜索平台优先级 |

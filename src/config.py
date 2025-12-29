@@ -15,17 +15,16 @@ class Config:
     music_path: str = "/music"
     scan_interval_days: int = 0  # 0 = run once, >0 = interval in days
     
-    # Behavior
-    overwrite_lyrics: bool = False
-    overwrite_cover: bool = False
+    # Download behavior (save as external files)
     download_lyrics: bool = True
     download_cover: bool = True
+    overwrite_lyrics: bool = False
+    overwrite_cover: bool = False
     
-    # Embedding behavior
-    embed_lyrics: bool = False      # Embed lyrics into audio file metadata
-    embed_cover: bool = False       # Embed cover into audio file metadata
-    overwrite_embedded: bool = False  # Overwrite already embedded data
-    update_metadata: bool = False   # Update artist/album from API results
+    # Update behavior (write to audio file metadata)
+    update_lyrics: bool = False      # Write lyrics to audio metadata
+    update_cover: bool = False       # Write cover to audio metadata
+    update_basic_info: bool = False  # Write artist/title/album from API
     
     # Default artist (used when ID3 tag has no artist info and folder inference fails)
     default_artist: str = ""
@@ -54,15 +53,15 @@ class Config:
             api_base_url=os.getenv("API_BASE_URL", "https://music-dl.sayqz.com"),
             music_path=os.getenv("MUSIC_PATH", "/music"),
             scan_interval_days=int(os.getenv("SCAN_INTERVAL_DAYS", "0")),
-            overwrite_lyrics=os.getenv("OVERWRITE_LYRICS", "false").lower() == "true",
-            overwrite_cover=os.getenv("OVERWRITE_COVER", "false").lower() == "true",
             download_lyrics=os.getenv("DOWNLOAD_LYRICS", "true").lower() == "true",
             download_cover=os.getenv("DOWNLOAD_COVER", "true").lower() == "true",
-            embed_lyrics=os.getenv("EMBED_LYRICS", "false").lower() == "true",
-            embed_cover=os.getenv("EMBED_COVER", "false").lower() == "true",
-            overwrite_embedded=os.getenv("OVERWRITE_EMBEDDED", "false").lower() == "true",
-            update_metadata=os.getenv("UPDATE_METADATA", "false").lower() == "true",
+            overwrite_lyrics=os.getenv("OVERWRITE_LYRICS", "false").lower() == "true",
+            overwrite_cover=os.getenv("OVERWRITE_COVER", "false").lower() == "true",
+            update_lyrics=os.getenv("UPDATE_LYRICS", "false").lower() == "true",
+            update_cover=os.getenv("UPDATE_COVER", "false").lower() == "true",
+            update_basic_info=os.getenv("UPDATE_BASIC_INFO", "false").lower() == "true",
             default_artist=os.getenv("DEFAULT_ARTIST", ""),
             use_folder_structure=os.getenv("USE_FOLDER_STRUCTURE", "true").lower() == "true",
             platforms=platforms,
         )
+

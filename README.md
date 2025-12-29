@@ -83,12 +83,11 @@ python -m src.main
 | `SCAN_INTERVAL_DAYS` | `0` | Scan interval in days (0 = run once, 1 = daily) |
 | `DOWNLOAD_LYRICS` | `true` | Download lyrics (.lrc files) |
 | `DOWNLOAD_COVER` | `true` | Download album covers (cover.jpg) |
-| `EMBED_LYRICS` | `false` | Embed lyrics into audio metadata |
-| `EMBED_COVER` | `false` | Embed cover into audio metadata |
-| `OVERWRITE_LYRICS` | `false` | Overwrite existing lyrics |
-| `OVERWRITE_COVER` | `false` | Overwrite existing covers |
-| `OVERWRITE_EMBEDDED` | `false` | Overwrite already embedded data |
-| `UPDATE_METADATA` | `false` | Update artist/title/album from API |
+| `OVERWRITE_LYRICS` | `false` | Overwrite existing lyrics files |
+| `OVERWRITE_COVER` | `false` | Overwrite existing cover files |
+| `UPDATE_LYRICS` | `false` | Write lyrics to audio metadata |
+| `UPDATE_COVER` | `false` | Write cover to audio metadata |
+| `UPDATE_BASIC_INFO` | `false` | Write artist/title/album from API |
 | `USE_FOLDER_STRUCTURE` | `true` | Infer artist/album from folder structure |
 | `DEFAULT_ARTIST` | `""` | Fallback artist name |
 | `PLATFORMS` | `netease,kuwo,qq` | Search platform priority |

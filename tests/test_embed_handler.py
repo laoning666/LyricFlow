@@ -131,7 +131,7 @@ class TestEmbedHandler:
         assert handler._detect_mime_type(unknown_data) == "image/jpeg"
     
     def test_embed_lyrics_empty_string(self):
-        config = Config(embed_lyrics=True)
+        config = Config(update_lyrics=True)
         handler = EmbedHandler(config)
         
         music_file = MusicFile(
@@ -145,7 +145,7 @@ class TestEmbedHandler:
         assert result is False
     
     def test_embed_cover_empty_bytes(self):
-        config = Config(embed_cover=True)
+        config = Config(update_cover=True)
         handler = EmbedHandler(config)
         
         music_file = MusicFile(
@@ -159,7 +159,7 @@ class TestEmbedHandler:
         assert result is False
     
     def test_embed_lyrics_unsupported_format(self):
-        config = Config(embed_lyrics=True)
+        config = Config(update_lyrics=True)
         handler = EmbedHandler(config)
         
         music_file = MusicFile(
@@ -173,7 +173,7 @@ class TestEmbedHandler:
         assert result is False
     
     def test_embed_cover_unsupported_format(self):
-        config = Config(embed_cover=True)
+        config = Config(update_cover=True)
         handler = EmbedHandler(config)
         
         music_file = MusicFile(
@@ -187,36 +187,36 @@ class TestEmbedHandler:
         assert result is False
 
 
-class TestConfigEmbedOptions:
-    """Test new embedding configuration options."""
+class TestConfigUpdateOptions:
+    """Test new metadata update configuration options."""
     
-    def test_default_embed_config(self):
+    def test_default_update_config(self):
         config = Config()
-        assert config.embed_lyrics is False
-        assert config.embed_cover is False
-        assert config.overwrite_embedded is False
+        assert config.update_lyrics is False
+        assert config.update_cover is False
+        assert config.update_basic_info is False
     
-    def test_from_env_embed_options(self):
+    def test_from_env_update_options(self):
         with patch.dict("os.environ", {
-            "EMBED_LYRICS": "true",
-            "EMBED_COVER": "true",
-            "OVERWRITE_EMBEDDED": "true",
+            "UPDATE_LYRICS": "true",
+            "UPDATE_COVER": "true",
+            "UPDATE_BASIC_INFO": "true",
         }):
             config = Config.from_env()
-            assert config.embed_lyrics is True
-            assert config.embed_cover is True
-            assert config.overwrite_embedded is True
+            assert config.update_lyrics is True
+            assert config.update_cover is True
+            assert config.update_basic_info is True
     
-    def test_from_env_embed_options_false(self):
+    def test_from_env_update_options_false(self):
         with patch.dict("os.environ", {
-            "EMBED_LYRICS": "false",
-            "EMBED_COVER": "false",
-            "OVERWRITE_EMBEDDED": "false",
+            "UPDATE_LYRICS": "false",
+            "UPDATE_COVER": "false",
+            "UPDATE_BASIC_INFO": "false",
         }):
             config = Config.from_env()
-            assert config.embed_lyrics is False
-            assert config.embed_cover is False
-            assert config.overwrite_embedded is False
+            assert config.update_lyrics is False
+            assert config.update_cover is False
+            assert config.update_basic_info is False
 
 
 class TestMP3Embedder:

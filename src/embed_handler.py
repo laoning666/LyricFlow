@@ -367,7 +367,7 @@ class EmbedHandler:
         else:
             return "image/jpeg"  # Default to JPEG
     
-    def update_basic_metadata(
+    def update_basic_info(
         self, 
         music_file: MusicFile, 
         artist: str, 
@@ -377,7 +377,8 @@ class EmbedHandler:
         """
         Update basic metadata (artist, title, album) from API results.
         Uses mutagen's easy interface for cross-format compatibility.
-        Returns True if successful.
+        If overwrite_updates is False, only updates empty/missing fields.
+        Returns True if any field was updated.
         """
         if not any([artist, title, album]):
             return False
@@ -397,6 +398,7 @@ class EmbedHandler:
             
             updated = False
             
+            # Always update fields when this method is called
             if artist:
                 audio["artist"] = artist
                 updated = True
@@ -411,12 +413,13 @@ class EmbedHandler:
             
             if updated:
                 audio.save()
-                logger.info(f"✓ Updated metadata: {music_file.path.name}")
+                logger.info(f"✓ Updated info: {music_file.path.name}")
                 return True
             
             return False
             
         except Exception as e:
-            logger.error(f"Failed to update metadata for {music_file.path}: {e}")
+            logger.error(f"Failed to update info for {music_file.path}: {e}")
             return False
+
 

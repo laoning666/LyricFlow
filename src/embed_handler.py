@@ -366,3 +366,57 @@ class EmbedHandler:
             return "image/webp"
         else:
             return "image/jpeg"  # Default to JPEG
+    
+    def update_basic_metadata(
+        self, 
+        music_file: MusicFile, 
+        artist: str, 
+        title: str, 
+        album: str
+    ) -> bool:
+        """
+        Update basic metadata (artist, title, album) from API results.
+        Uses mutagen's easy interface for cross-format compatibility.
+        Returns True if successful.
+        """
+        if not any([artist, title, album]):
+            return False
+        
+        ext = music_file.path.suffix.lower()
+        
+        # Skip unsupported formats
+        if ext not in self.EMBEDDERS:
+            logger.debug(f"No embedder available for {ext}")
+            return False
+        
+        try:
+            # Use mutagen's easy interface for basic tags
+            audio = MutagenFile(music_file.path, easy=True)
+            if audio is None:
+                return False
+            
+            updated = False
+            
+            if artist:
+                audio["artist"] = artist
+                updated = True
+            
+            if title:
+                audio["title"] = title
+                updated = True
+            
+            if album:
+                audio["album"] = album
+                updated = True
+            
+            if updated:
+                audio.save()
+                logger.info(f"✓ Updated metadata: {music_file.path.name}")
+                return True
+            
+            return False
+            
+        except Exception as e:
+            logger.error(f"Failed to update metadata for {music_file.path}: {e}")
+            return False
+

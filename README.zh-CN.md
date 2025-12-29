@@ -88,6 +88,7 @@ python -m src.main
 | `OVERWRITE_LYRICS` | `false` | 是否覆盖已有歌词 |
 | `OVERWRITE_COVER` | `false` | 是否覆盖已有封面 |
 | `OVERWRITE_EMBEDDED` | `false` | 是否覆盖已嵌入的数据 |
+| `UPDATE_METADATA` | `false` | 从 API 更新艺术家/标题/专辑 |
 | `USE_FOLDER_STRUCTURE` | `true` | 从文件夹结构推断歌手/专辑 |
 | `DEFAULT_ARTIST` | `""` | 备用默认歌手名 |
 | `PLATFORMS` | `netease,kuwo,qq` | 搜索平台优先级 |

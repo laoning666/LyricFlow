@@ -39,6 +39,7 @@ class LyricFlow:
             "covers_downloaded": 0,
             "lyrics_embedded": 0,
             "covers_embedded": 0,
+            "metadata_updated": 0,
             "skipped": 0,
             "failed": 0,
         }
@@ -53,6 +54,7 @@ class LyricFlow:
         logger.info(f"Download covers: {self.config.download_cover}")
         logger.info(f"Embed lyrics: {self.config.embed_lyrics}")
         logger.info(f"Embed covers: {self.config.embed_cover}")
+        logger.info(f"Update metadata: {self.config.update_metadata}")
         logger.info(f"Platforms: {', '.join(self.config.platforms)}")
         logger.info("=" * 50)
         
@@ -89,7 +91,8 @@ class LyricFlow:
                 needs_cover = False
             
             # Check if anything needs processing
-            if not any([needs_lyrics, needs_cover, needs_embed_lyrics, needs_embed_cover]):
+            needs_update_metadata = self.config.update_metadata
+            if not any([needs_lyrics, needs_cover, needs_embed_lyrics, needs_embed_cover, needs_update_metadata]):
                 self.stats["skipped"] += 1
                 continue
             
@@ -105,6 +108,13 @@ class LyricFlow:
             if not best:
                 self.stats["failed"] += 1
                 continue
+            
+            # Update basic metadata from API (artist, title, album)
+            if needs_update_metadata:
+                if self.embedder.update_basic_metadata(
+                    music_file, best.artist, best.name, best.album
+                ):
+                    self.stats["metadata_updated"] += 1
             
             # Handle lyrics (download once, use for both saving and embedding)
             lyrics = None
@@ -142,13 +152,14 @@ class LyricFlow:
         """Print processing statistics."""
         logger.info("=" * 50)
         logger.info("Processing Complete!")
-        logger.info(f"  Scanned:         {self.stats['scanned']} files")
-        logger.info(f"  Lyrics saved:    {self.stats['lyrics_downloaded']}")
-        logger.info(f"  Covers saved:    {self.stats['covers_downloaded']}")
-        logger.info(f"  Lyrics embedded: {self.stats['lyrics_embedded']}")
-        logger.info(f"  Covers embedded: {self.stats['covers_embedded']}")
-        logger.info(f"  Skipped:         {self.stats['skipped']} (already exists)")
-        logger.info(f"  Failed:          {self.stats['failed']} (no match)")
+        logger.info(f"  Scanned:          {self.stats['scanned']} files")
+        logger.info(f"  Lyrics saved:     {self.stats['lyrics_downloaded']}")
+        logger.info(f"  Covers saved:     {self.stats['covers_downloaded']}")
+        logger.info(f"  Lyrics embedded:  {self.stats['lyrics_embedded']}")
+        logger.info(f"  Covers embedded:  {self.stats['covers_embedded']}")
+        logger.info(f"  Metadata updated: {self.stats['metadata_updated']}")
+        logger.info(f"  Skipped:          {self.stats['skipped']} (already exists)")
+        logger.info(f"  Failed:           {self.stats['failed']} (no match)")
         logger.info("=" * 50)
 
 

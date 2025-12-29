@@ -88,6 +88,7 @@ python -m src.main
 | `OVERWRITE_LYRICS` | `false` | Overwrite existing lyrics |
 | `OVERWRITE_COVER` | `false` | Overwrite existing covers |
 | `OVERWRITE_EMBEDDED` | `false` | Overwrite already embedded data |
+| `UPDATE_METADATA` | `false` | Update artist/title/album from API |
 | `USE_FOLDER_STRUCTURE` | `true` | Infer artist/album from folder structure |
 | `DEFAULT_ARTIST` | `""` | Fallback artist name |
 | `PLATFORMS` | `netease,kuwo,qq` | Search platform priority |

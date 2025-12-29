@@ -38,6 +38,11 @@ ENV DOWNLOAD_COVER=true
 ENV OVERWRITE_LYRICS=false
 ENV OVERWRITE_COVER=false
 
+# Update behavior (write to audio file metadata) / 写入音频元数据
+ENV UPDATE_LYRICS=false
+ENV UPDATE_COVER=false
+ENV UPDATE_BASIC_INFO=false
+
 # Artist inference / 歌手推断
 ENV DEFAULT_ARTIST=""
 ENV USE_FOLDER_STRUCTURE=true

@@ -32,9 +32,15 @@ services:
       - OVERWRITE_LYRICS=false
       - OVERWRITE_COVER=false
       
+      # write to audio file metadata
+      # 写入音频元数据
+      - UPDATE_LYRICS=false
+      - UPDATE_COVER=false
+      - UPDATE_BASIC_INFO=false
+      
       # Infer artist/album from folder structure
       # 从文件夹结构推断歌手/专辑
-      # Expects: /music/Artist/Album/song.mp3
+      # Supported: /music/Artist/Album/song.mp3 OR /music/Artist/song.mp3
       - USE_FOLDER_STRUCTURE=true
       
       # Default artist (fallback) / 默认歌手（备用）

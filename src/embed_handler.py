@@ -300,12 +300,6 @@ class EmbedHandler:
             logger.debug(f"No embedder available for {music_file.path.suffix}")
             return False
         
-        # Check if already embedded
-        if not self.config.overwrite_embedded:
-            if embedder.has_embedded_lyrics(music_file.path):
-                logger.debug(f"Lyrics already embedded, skipping: {music_file.path}")
-                return False
-        
         if embedder.embed_lyrics(music_file.path, lyrics):
             logger.info(f"✓ Embedded lyrics: {music_file.path.name}")
             return True
@@ -324,12 +318,6 @@ class EmbedHandler:
         if not embedder:
             logger.debug(f"No embedder available for {music_file.path.suffix}")
             return False
-        
-        # Check if already embedded
-        if not self.config.overwrite_embedded:
-            if embedder.has_embedded_cover(music_file.path):
-                logger.debug(f"Cover already embedded, skipping: {music_file.path}")
-                return False
         
         # Detect mime type from data
         mime_type = self._detect_mime_type(cover_data)

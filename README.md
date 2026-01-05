@@ -13,6 +13,7 @@
 - 🔄 Incremental processing (skip existing files)
 - ⏰ Scheduled scanning mode
 - 🐳 Docker support
+- 📁 **STRM file support** - Works with cloud storage streaming files
 
 ## Docker Images
 
@@ -132,6 +133,33 @@ volumes:
 3. Upload `docker-compose.yml`
 4. Modify volume path to your music shared folder (e.g., `/volume1/music`)
 5. Build and run
+
+## STRM Files Support
+
+LyricFlow supports `.strm` (streaming) files for cloud-based music libraries. STRM files are text files containing URLs pointing to remote audio files, commonly used with Emby, Jellyfin, or Plex.
+
+### How It Works
+
+```
+Local:                          Cloud Storage:
+/music/Artist/Album/            (Aliyun, Baidu, etc.)
+├── song.strm  ──────────────→  Actual audio file
+├── song.lrc   ← Downloaded     
+└── cover.jpg  ← Downloaded     
+```
+
+- **song.strm**: Contains URL to remote audio (created by you)
+- **song.lrc**: Lyrics downloaded by LyricFlow
+- **cover.jpg**: Album cover downloaded by LyricFlow
+
+### Usage
+
+1. Organize your STRM files in `Artist/Album/` folder structure
+2. LyricFlow will extract artist and title from folder names and filenames
+3. Lyrics and covers are saved locally alongside the STRM files
+4. Media players (Emby/Jellyfin/Plex) will stream audio from cloud while reading local metadata
+
+> **Note**: Embedding metadata into STRM files is not supported (they are text files). Use `DOWNLOAD_LYRICS=true` and `DOWNLOAD_COVER=true` instead.
 
 ## API Source
 

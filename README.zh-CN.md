@@ -13,6 +13,7 @@
 - 🔄 增量处理，跳过已有歌词/封面的文件
 - ⏰ 支持定时扫描模式
 - 🐳 Docker 容器化部署
+- 📁 **STRM 文件支持** - 支持网盘流媒体文件
 
 ## Docker 镜像
 
@@ -132,6 +133,33 @@ volumes:
 3. 上传 `docker-compose.yml`
 4. 修改卷映射路径为你的音乐共享文件夹（如 `/volume1/music`）
 5. 构建并运行
+
+## STRM 文件支持
+
+LyricFlow 支持 `.strm`（流媒体）文件，适用于基于网盘的音乐库管理。STRM 文件是包含远程音频 URL 的文本文件，常用于 Emby、Jellyfin 或 Plex。
+
+### 工作原理
+
+```
+本地目录：                      云存储（网盘）：
+/music/歌手/专辑/               阿里云盘、百度网盘等
+├── 歌曲.strm ──────────────→  实际音频文件
+├── 歌曲.lrc  ← LyricFlow 下载     
+└── cover.jpg ← LyricFlow 下载     
+```
+
+- **歌曲.strm**：包含远程音频 URL（由你创建）
+- **歌曲.lrc**：LyricFlow 下载的歌词
+- **cover.jpg**：LyricFlow 下载的专辑封面
+
+### 使用方法
+
+1. 按 `歌手/专辑/` 文件夹结构整理 STRM 文件
+2. LyricFlow 会从文件夹名和文件名提取歌手和歌曲信息
+3. 歌词和封面会保存在 STRM 文件同目录
+4. 媒体播放器（Emby/Jellyfin/Plex）会从网盘串流音频，同时读取本地元数据
+
+> **注意**：STRM 文件是文本文件，不支持嵌入元数据。请使用 `DOWNLOAD_LYRICS=true` 和 `DOWNLOAD_COVER=true` 下载到本地文件。
 
 ## API 来源
 

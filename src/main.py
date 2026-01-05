@@ -111,6 +111,8 @@ class LyricFlow:
                     music_file, best.artist, best.name, best.album
                 ):
                     self.stats["info_updated"] += 1
+            elif needs_update_basic_info and music_file.is_strm:
+                logger.debug(f"Skipping basic info embed for STRM file: {music_file.path.name}")
             
             # Handle lyrics (download once, use for both saving and updating)
             lyrics = None
@@ -125,6 +127,8 @@ class LyricFlow:
                     # Update in metadata (skip for STRM files)
                     if needs_update_lyrics and not music_file.is_strm and self.embedder.embed_lyrics(music_file, lyrics):
                         self.stats["lyrics_updated"] += 1
+                    elif needs_update_lyrics and music_file.is_strm:
+                        logger.debug(f"Skipping lyrics embed for STRM file: {music_file.path.name}")
             
             # Handle cover (download once, use for both saving and updating)
             cover = None
@@ -140,6 +144,8 @@ class LyricFlow:
                     # Update in metadata (for each file, skip for STRM)
                     if needs_update_cover and not music_file.is_strm and self.embedder.embed_cover(music_file, cover):
                         self.stats["covers_updated"] += 1
+                    elif needs_update_cover and music_file.is_strm:
+                        logger.debug(f"Skipping cover embed for STRM file: {music_file.path.name}")
             
             # Small delay to be nice to the API
             time.sleep(0.2)

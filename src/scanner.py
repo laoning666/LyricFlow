@@ -108,8 +108,6 @@ class MusicScanner:
                 
                 # Use grandparent as artist if no ID3 artist
                 # Make sure grandparent is not the music root itself
-                # Use grandparent as artist if no ID3 artist
-                # Make sure grandparent is not the music root itself
                 if not artist and grandparent.name and grandparent.resolve() != music_root:
                     artist = grandparent.name
                     logger.debug(f"No artist tag, using folder: {artist}")

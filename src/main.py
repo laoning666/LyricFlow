@@ -105,7 +105,8 @@ class LyricFlow:
                 continue
             
             # Update basic metadata from API (artist, title, album)
-            if needs_update_basic_info:
+            # Skip for STRM files (they are text files, cannot embed metadata)
+            if needs_update_basic_info and not music_file.is_strm:
                 if self.embedder.update_basic_info(
                     music_file, best.artist, best.name, best.album
                 ):
@@ -121,8 +122,8 @@ class LyricFlow:
                     if needs_lyrics and self.handler.save_lyrics(music_file, lyrics):
                         self.stats["lyrics_saved"] += 1
                     
-                    # Update in metadata
-                    if needs_update_lyrics and self.embedder.embed_lyrics(music_file, lyrics):
+                    # Update in metadata (skip for STRM files)
+                    if needs_update_lyrics and not music_file.is_strm and self.embedder.embed_lyrics(music_file, lyrics):
                         self.stats["lyrics_updated"] += 1
             
             # Handle cover (download once, use for both saving and updating)
@@ -136,8 +137,8 @@ class LyricFlow:
                         self.stats["covers_saved"] += 1
                         processed_dirs.add(music_file.path.parent)
                     
-                    # Update in metadata (for each file)
-                    if needs_update_cover and self.embedder.embed_cover(music_file, cover):
+                    # Update in metadata (for each file, skip for STRM)
+                    if needs_update_cover and not music_file.is_strm and self.embedder.embed_cover(music_file, cover):
                         self.stats["covers_updated"] += 1
             
             # Small delay to be nice to the API

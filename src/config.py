@@ -36,8 +36,8 @@ class Config:
     # Platforms priority for search
     platforms: list[str] = None
     
-    # Supported audio extensions
-    audio_extensions: tuple[str, ...] = (".mp3", ".flac", ".m4a", ".wav", ".ogg", ".wma", ".ape")
+    # Supported audio extensions (including .strm for streaming files)
+    audio_extensions: tuple[str, ...] = (".mp3", ".flac", ".m4a", ".wav", ".ogg", ".wma", ".ape", ".strm")
     
     def __post_init__(self):
         if self.platforms is None:

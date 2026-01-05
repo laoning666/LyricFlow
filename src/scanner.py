@@ -17,6 +17,7 @@ class MusicFile:
     artist: str
     title: str
     album: str
+    is_strm: bool = False  # True if this is a .strm streaming file
     
     @property
     def lyrics_path(self) -> Path:
@@ -74,8 +75,16 @@ class MusicScanner:
         """Check if file has a supported audio extension."""
         return filename.lower().endswith(self.config.audio_extensions)
     
+    def _is_strm_file(self, file_path: Path) -> bool:
+        """Check if file is a .strm streaming file."""
+        return file_path.suffix.lower() == ".strm"
+    
     def _parse_file(self, file_path: Path) -> Optional[MusicFile]:
         """Extract metadata from an audio file."""
+        # Handle STRM files specially (they are text files, not audio)
+        if self._is_strm_file(file_path):
+            return self._parse_strm_file(file_path)
+        
         try:
             audio = MutagenFile(file_path, easy=True)
             if audio is None:
@@ -146,3 +155,56 @@ class MusicScanner:
         except Exception:
             pass
         return default
+    
+    def _parse_strm_file(self, file_path: Path) -> Optional[MusicFile]:
+        """
+        Parse a .strm streaming file.
+        STRM files are text files containing URLs, so we extract metadata
+        from the filename and folder structure only.
+        """
+        try:
+            # Use filename (without extension) as title
+            title = file_path.stem
+            artist = ""
+            album = ""
+            
+            # Infer from folder structure: Artist/Album/song.strm
+            if self.config.use_folder_structure:
+                parent = file_path.parent  # Album folder
+                grandparent = parent.parent  # Artist folder
+                music_root = Path(self.config.music_path).resolve()
+                
+                # Use grandparent as artist if not the music root
+                if grandparent.name and grandparent.resolve() != music_root:
+                    artist = grandparent.name
+                    logger.debug(f"STRM: Using grandparent as artist: {artist}")
+                elif parent.name and grandparent.resolve() == music_root:
+                    # Shallow structure: Artist/song.strm
+                    artist = parent.name
+                    album = ""
+                    logger.debug(f"STRM: Shallow structure, using parent as artist: {artist}")
+                
+                # Use parent as album if not used as artist
+                if parent.name and parent.name != artist:
+                    album = parent.name
+                    logger.debug(f"STRM: Using parent as album: {album}")
+            
+            # Fallback to default_artist if still no artist
+            if not artist and self.config.default_artist:
+                artist = self.config.default_artist
+                logger.debug(f"STRM: Using default artist: {artist}")
+            
+            logger.info(f"Parsed STRM file: {artist} - {title}")
+            
+            return MusicFile(
+                path=file_path,
+                artist=artist,
+                title=title,
+                album=album,
+                is_strm=True,
+            )
+            
+        except Exception as e:
+            logger.warning(f"Failed to parse STRM file {file_path}: {e}")
+            return None
+

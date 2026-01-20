@@ -94,7 +94,7 @@ python -m src.main
 | `DEFAULT_ARTIST` | `""` | Fallback artist name |
 | `API_PROVIDER` | `tunehub` | API provider (`tunehub` or `lrcapi`) |
 | `PLATFORMS` | `netease,kuwo,qq` | Search platform priority (TuneHub only) |
-| `LRCAPI_URL` | `https://api.lrc.cx` | LrcApi server URL |
+| `LRCAPI_URL` | `https://api.lrc.cx` | LrcApi server URL ([self-host](https://github.com/HisAtri/LrcApi)) |
 | `LRCAPI_AUTH` | `""` | LrcApi authentication key (optional) |
 
 ## Folder Structure
@@ -116,7 +116,7 @@ Two structures are supported:
 
 The tool will:
 1. Read artist from folder name (or ID3 tag if available)
-2. Search for lyrics and covers using TuneHub API
+2. Search for lyrics and covers using the configured API provider
 3. Save `.lrc` files with the same name as music files
 4. Save `cover.jpg` in each album folder
 

@@ -94,7 +94,7 @@ python -m src.main
 | `DEFAULT_ARTIST` | `""` | 备用默认歌手名 |
 | `API_PROVIDER` | `tunehub` | API 提供商（`tunehub` 或 `lrcapi`） |
 | `PLATFORMS` | `netease,kuwo,qq` | 搜索平台优先级（仅 TuneHub） |
-| `LRCAPI_URL` | `https://api.lrc.cx` | LrcApi 服务器地址 |
+| `LRCAPI_URL` | `https://api.lrc.cx` | LrcApi 服务器地址（[自建部署](https://github.com/HisAtri/LrcApi)） |
 | `LRCAPI_AUTH` | `""` | LrcApi 鉴权密钥（可选） |
 
 ## 文件夹结构
@@ -116,7 +116,7 @@ python -m src.main
 
 工具会：
 1. 从文件夹名读取歌手（或使用 ID3 标签）
-2. 使用 TuneHub API 搜索歌词和封面
+2. 使用配置的 API 提供商搜索歌词和封面
 3. 保存 `.lrc` 文件（与音乐文件同名）
 4. 在每个专辑文件夹保存 `cover.jpg`
 
